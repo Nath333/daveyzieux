@@ -35,7 +35,8 @@ def get_data():
         temperatures = data['hourly']['temperature_2m']  # Corrected key from 'temperature' to 'temperature_2m'
 
         for time, cloud_cover, temp in zip(hourly_times, cloud_covers, temperatures):
-            hour = ET.SubElement(hourly, "Hour", time=time)
+            formatted_time = time.replace('T', ' ')  # This replaces 'T' with a space
+            hour = ET.SubElement(hourly, "Hour", time=formatted_time)
             ET.SubElement(hour, "CloudCover").text = str(cloud_cover)
             ET.SubElement(hour, "Temperature").text = str(temp)  # Adjusted to match corrected key
 
@@ -50,8 +51,11 @@ def get_data():
             day_elem = ET.SubElement(daily, "Day", date=day)
             ET.SubElement(day_elem, "MaxTemperature").text = str(max_temp)
             ET.SubElement(day_elem, "MinTemperature").text = str(min_temp)
-            ET.SubElement(day_elem, "Sunrise").text = sunrise
-            ET.SubElement(day_elem, "Sunset").text = sunset
+            formatted_sunrise = sunrise.replace('T', ' ')  # Replace 'T' with a space
+            formatted_sunset = sunset.replace('T', ' ')    # Replace 'T' with a space
+            ET.SubElement(day_elem, "Sunrise").text = formatted_sunrise
+            ET.SubElement(day_elem, "Sunset").text = formatted_sunset
+
 
         # Convert the XML tree to a string and return it
         xml_str = ET.tostring(root, encoding='utf8', method='xml')
