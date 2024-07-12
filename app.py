@@ -51,8 +51,8 @@ def get_data():
             day_elem = ET.SubElement(daily, "Day", date=day)
             ET.SubElement(day_elem, "MaxTemperature").text = str(max_temp)
             ET.SubElement(day_elem, "MinTemperature").text = str(min_temp)
-            formatted_sunrise = sunrise.replace('T', ' ')  # Replace 'T' with a space
-            formatted_sunset = sunset.replace('T', ' ')    # Replace 'T' with a space
+            formatted_sunrise = sunrise.split('T')[1]
+            formatted_sunset = sunset.split('T')[1]
             ET.SubElement(day_elem, "Sunrise").text = formatted_sunrise
             ET.SubElement(day_elem, "Sunset").text = formatted_sunset
 
