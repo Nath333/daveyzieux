@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 def get_data():
     try:
         # Make a request to the API with updated parameters
-        response = requests.get("https://api.open-meteo.com/v1/forecast?latitude=45.7485&longitude=4.8467&current=temperature_2m,apparent_temperature,cloud_cover&hourly=temperature_2m,cloud_cover&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&timezone=Europe%2FBerlin")
+        response = requests.get("https://api.open-meteo.com/v1/forecast?latitude=45.7485&longitude=4.8467&current=temperature_2m,apparent_temperature,cloud_cover&hourly=temperature_2m,cloud_cover&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset")
         data = response.json()
 
         # Log the response
@@ -51,10 +51,8 @@ def get_data():
             day_elem = ET.SubElement(daily, "Day", date=day)
             ET.SubElement(day_elem, "MaxTemperature").text = str(max_temp)
             ET.SubElement(day_elem, "MinTemperature").text = str(min_temp)
-            formatted_sunrise = sunrise.split('T')[1]
-            formatted_sunset = sunset.split('T')[1]
-            ET.SubElement(day_elem, "Sunrise").text = formatted_sunrise
-            ET.SubElement(day_elem, "Sunset").text = formatted_sunset
+            ET.SubElement(day_elem, "Sunrise").text = sunrise
+            ET.SubElement(day_elem, "Sunset").text = sunset
 
 
         # Convert the XML tree to a string and return it
